@@ -59,7 +59,7 @@ class _FormControllerState extends State<FormController> {
     print(body);
 
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:5000/add_data/'),
+      Uri.parse('https://sst-server.vercel.app/add_data/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

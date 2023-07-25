@@ -45,7 +45,7 @@ class _BottomSheetState extends State<BottomSheet> {
       };
 
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:5000/registration/'),
+        Uri.parse('https://sst-server.vercel.app/registration/'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
