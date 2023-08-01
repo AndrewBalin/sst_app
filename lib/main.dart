@@ -47,9 +47,9 @@ class MyApp extends StatelessWidget {
 
         if(routeSettings.name == '/') {
 
-          /*return MaterialPageRoute(
+          return MaterialPageRoute(
             builder: (context) => MainScreen(),
-          );*/
+          );
 
           Box<User> contactsBox = Hive.box<User>(HiveBoxes.user);
           var box = contactsBox.values;

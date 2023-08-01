@@ -2,7 +2,7 @@
     package="com.sst.app.sstapp">
    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="sstapp"
+        android:label="Сам Себе Тренер"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
