@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'check/cameracheck.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:camera/camera.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -14,9 +18,12 @@ import '../models/user.dart';
 
 import 'sport/sport.dart';
 
+import 'package:sstapp/coming_soon.dart';
+
 class MainScreen extends StatefulWidget {
 
-  MainScreen({Key? key}) : super(key:key);
+  final CameraDescription camera;
+  MainScreen({Key? key, required this.camera}) : super(key:key);
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -25,6 +32,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
 
   int _currentIndex = 0;
+
 
   final PageController _controller = PageController();
   Map<String, String> userData = {};
@@ -49,6 +57,8 @@ class _MainScreenState extends State<MainScreen> {
             fontWeight: FontWeight.w400, fontFamily: 'Montserrat', fontSize: 18),
         onTap: (value) {
           setState(() => _currentIndex = value);
+          print(value);
+          _controller.jumpToPage(value);
         },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -81,7 +91,11 @@ class _MainScreenState extends State<MainScreen> {
         physics: const NeverScrollableScrollPhysics(),
         controller: _controller,
         children: [
-          SportScreen(),
+          ComingSoon(),
+          ComingSoon(),
+          ComingSoon(),
+          SportScreen(camera: widget.camera),
+          ComingSoon(),
         ],
       ),
     );
