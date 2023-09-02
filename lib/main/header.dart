@@ -38,7 +38,7 @@ class _SportBarState extends State<SportBar> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 18, top: 18, right: 18),
+              padding: EdgeInsets.only(left: 18, right: 18, top: 48),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
