@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:hive/hive.dart';
 import 'package:sstapp/imageUtils.dart';
 
 //import 'package:flutter_webrtc/flutter_webrtc.dart';
@@ -34,17 +35,16 @@ class _CameraSportState extends State<CameraSport> {
   late int frameNum;
   ImageUtils imageConverter = ImageUtils();
   imglib.PngEncoder pngEncoder = imglib.PngEncoder();
-  String rec = "Продолжайте в том же духе!";
+  String rec = "Проблема с подключением, попробуйте позже!!";
 
   @override
   void initState() {
-
     frameNum = 0;
     super.initState();
 
 
     // Initialize SocketIO connection
-    _socketIoInit();
+    //_socketIoInit();
 
     _cameraInit();
 
@@ -85,8 +85,7 @@ class _CameraSportState extends State<CameraSport> {
     });
     print('>>>START');
     //scheduleTimeout(); //76800 3790
-    _startStreamingFrames();
-
+    //_startStreamingFrames();
   }
 
   /*Timer scheduleTimeout([int milliseconds = 100]) =>
@@ -99,11 +98,11 @@ class _CameraSportState extends State<CameraSport> {
   }*/
 
   void _startStreamingFrames() async {
-   await _controller.startImageStream((CameraImage image) {
-
-      if (frameNum == 0){
+    await _controller.startImageStream((CameraImage image) {
+      if (frameNum == 0) {
         imglib.Image convertedImage = imageConverter.convertCameraImage(image);
-        imglib.Image compressedImage = imglib.copyResize(convertedImage, width: 224, height: 224);
+        imglib.Image compressedImage = imglib.copyResize(
+            convertedImage, width: 224, height: 224);
         Uint8List pngImage = imglib.encodePng(compressedImage, level: 9);
 
         socket.emit('stream', {'frame': pngImage});
@@ -136,12 +135,85 @@ class _CameraSportState extends State<CameraSport> {
       return Container();
     }
     return Scaffold(
-      appBar: AppBar(title: Text('Real-time Video Streaming')),
       body: Center(
           child: Column(
             children: [
-              CameraPreview(_controller),
-              Text(rec)
+              Padding(
+                padding: EdgeInsets.only(left: 18, right: 15, top: 48),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 18, right: 18, top: 24),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20)
+                  ),
+                  height: 136,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 18, right: 18, top: 36),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                          color: Colors.black
+                      )
+                  ),
+                  child: CameraPreview(_controller),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 18, right: 18, top: 36),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  child: LinearProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        Color.fromARGB(255, 255, 49, 27)),
+                    backgroundColor: Color.fromARGB(255, 244, 244, 244),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 18, right: 18, top: 24),
+                child: Center(
+                  child: Text(
+                      '5/24',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: 40,
+                        fontWeight: FontWeight.w700
+                      ),
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 18, right: 18, top: 54),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.red,
+                        blurRadius: 4,
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      rec,
+                      style: TextStyle(
+                        fontFamily: 'ActayWide',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 24
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               /*IconButton(onPressed: () async {
                 XFile image = await _controller.takePicture();
                 List<int> frameBytes = await image.readAsBytes();

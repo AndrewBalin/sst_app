@@ -15,7 +15,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../../client/hive_names.dart';
 import '../../models/user.dart';
 
-import 'header.dart';
+import '../header.dart';
 
 class SportScreen extends StatefulWidget {
 
@@ -53,7 +53,7 @@ class _SportScreenState extends State<SportScreen> {
 
     return Column(
       children: [
-        SportBar('Тренировки'),
+        HeaderBar('Тренировки'),
         Padding(
             padding: EdgeInsets.only(left: 18, top: 24, right: 18),
             child: Container(

@@ -9,19 +9,19 @@ import 'package:http/http.dart' as http;
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../client/hive_names.dart';
-import '../../models/user.dart';
+import '../client/hive_names.dart';
+import '../models/user.dart';
 
-class SportBar extends StatefulWidget {
+class HeaderBar extends StatefulWidget {
 
   late String name;
-  SportBar(this.name, {Key? key}) : super(key:key);
+  HeaderBar(this.name, {Key? key}) : super(key:key);
 
   @override
-  State<SportBar> createState() => _SportBarState();
+  State<HeaderBar> createState() => _HeaderBarState();
 }
 
-class _SportBarState extends State<SportBar> {
+class _HeaderBarState extends State<HeaderBar> {
 
   int _currentIndex = 0;
 

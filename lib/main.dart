@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
-import 'eat/cameraEat.dart';
+import 'main/eat/cameraEat.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 

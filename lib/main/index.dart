@@ -17,6 +17,8 @@ import '../client/hive_names.dart';
 import '../models/user.dart';
 
 import 'sport/sport.dart';
+import 'eat/eat.dart';
+import 'eat/diet.dart';
 
 import 'package:sstapp/coming_soon.dart';
 
@@ -44,6 +46,7 @@ class _MainScreenState extends State<MainScreen> {
         .size;
 
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 253, 254, 253),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
         currentIndex: _currentIndex,
@@ -95,7 +98,7 @@ class _MainScreenState extends State<MainScreen> {
           ComingSoon(),
           ComingSoon(),
           SportScreen(camera: widget.camera),
-          ComingSoon(),
+          DietScreen(camera: widget.camera)
         ],
       ),
     );

@@ -16,7 +16,7 @@ import 'package:scroll_snap_list/scroll_snap_list.dart';
 import '../../client/hive_names.dart';
 import '../../models/user.dart';
 
-import 'header.dart';
+import '../header.dart';
 
 class NewTrains extends StatefulWidget {
 
