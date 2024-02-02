@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -66,7 +65,7 @@ class _BottomSheetState extends State<BottomSheet> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Padding(
+        const Padding(
           padding: EdgeInsets.only(left: 18, top: 48),
           child: Text(
             'Новый аккаунт',
@@ -77,16 +76,16 @@ class _BottomSheetState extends State<BottomSheet> {
           ),
         ),
         Padding(
-            padding: EdgeInsets.only(left: 18, top: 36, right: 18),
+            padding: const EdgeInsets.only(left: 18, top: 36, right: 18),
             child: TextField(
               onChanged: (email) {
                 _email = email;
               },
-              style: TextStyle(fontFamily: 'Montserrst',
+              style: const TextStyle(fontFamily: 'Montserrst',
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
               ),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.mail_outline, size: 25),
                 labelText: 'Почта',
                 labelStyle: TextStyle(fontFamily: 'Montserrat',
@@ -99,16 +98,16 @@ class _BottomSheetState extends State<BottomSheet> {
             )
         ),
         Padding(
-            padding: EdgeInsets.only(left: 18, top: 24, right: 18),
+            padding: const EdgeInsets.only(left: 18, top: 24, right: 18),
             child: TextField(
               onChanged: (login) {
                 _login = login;
               },
-              style: TextStyle(fontFamily: 'Montserrst',
+              style: const TextStyle(fontFamily: 'Montserrst',
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
               ),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.person_outlined, size: 25),
                 labelText: 'Логин',
                 labelStyle: TextStyle(fontFamily: 'Montserrat',
@@ -121,16 +120,16 @@ class _BottomSheetState extends State<BottomSheet> {
             )
         ),
         Padding(
-            padding: EdgeInsets.only(left: 18, top: 24, right: 18),
+            padding: const EdgeInsets.only(left: 18, top: 24, right: 18),
             child: TextField(
               onChanged: (password) {
                 _password = password;
               },
-              style: TextStyle(fontFamily: 'Montserrst',
+              style: const TextStyle(fontFamily: 'Montserrst',
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
               ),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.key_outlined, size: 25),
                   labelText: 'Пароль',
                   labelStyle: TextStyle(fontFamily: 'Montserrat',
@@ -147,7 +146,7 @@ class _BottomSheetState extends State<BottomSheet> {
             child: Align(
               alignment: FractionalOffset.bottomCenter,
               child: Padding(
-                  padding: EdgeInsets.only(bottom: 36, left: 18, right: 18),
+                  padding: const EdgeInsets.only(bottom: 36, left: 18, right: 18),
                   child: ElevatedButton(
                     onPressed: () {
                       _register();
@@ -157,11 +156,11 @@ class _BottomSheetState extends State<BottomSheet> {
                             fontSize: 18,
                             fontWeight: FontWeight.w600)),
                     style: ElevatedButton.styleFrom(
-                        primary: Color.fromARGB(255, 255, 49, 27),
-                        padding: EdgeInsets.only(top: 25, bottom: 25),
-                        minimumSize: Size(double.infinity, 0),
+                        backgroundColor: const Color.fromARGB(255, 255, 49, 27),
+                        padding: const EdgeInsets.only(top: 25, bottom: 25),
+                        minimumSize: const Size(double.infinity, 0),
                         elevation: 7,
-                        shadowColor: Color.fromARGB(255, 243, 93, 77),
+                        shadowColor: const Color.fromARGB(255, 243, 93, 77),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(500)
                         )
@@ -203,7 +202,7 @@ class _IntroSlideState extends State<IntroSlide> {
           verticalDirection: VerticalDirection.up,
           children: [
             Padding(
-              padding: EdgeInsets.only(bottom: 36, left: 18, right: 18),
+              padding: const EdgeInsets.only(bottom: 36, left: 18, right: 18),
               child: ElevatedButton(
                 onPressed: () {
                   showModalBottomSheet<void>(
@@ -212,13 +211,13 @@ class _IntroSlideState extends State<IntroSlide> {
                           size.height * 0.7)),
                       isScrollControlled: true,
                       context: context,
-                      shape: RoundedRectangleBorder(
+                      shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                       ),
                       builder: (BuildContext context) {
-                        return Container(
+                        return SizedBox(
                           height: size.height * 0.7,
-                          child: BottomSheet(),
+                          child: const BottomSheet(),
                         );
                       }
                   );
@@ -228,11 +227,11 @@ class _IntroSlideState extends State<IntroSlide> {
                         fontSize: 18,
                         fontWeight: FontWeight.w600)),
                 style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 255, 49, 27),
-                    padding: EdgeInsets.only(top: 25, bottom: 25),
-                    minimumSize: Size(double.infinity, 0),
+                    backgroundColor: const Color.fromARGB(255, 255, 49, 27),
+                    padding: const EdgeInsets.only(top: 25, bottom: 25),
+                    minimumSize: const Size(double.infinity, 0),
                     elevation: 7,
-                    shadowColor: Color.fromARGB(255, 243, 93, 77),
+                    shadowColor: const Color.fromARGB(255, 243, 93, 77),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(500)
                     )
@@ -252,7 +251,7 @@ class _IntroSlideState extends State<IntroSlide> {
               ),
             ),
             Padding(
-                padding: EdgeInsets.only(bottom: 24, left: 18),
+                padding: const EdgeInsets.only(bottom: 24, left: 18),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

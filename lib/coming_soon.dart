@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class ComingSoon extends StatefulWidget {
 
-  ComingSoon({Key? key}) : super(key:key);
+  const ComingSoon({Key? key}) : super(key:key);
 
   @override
   State<ComingSoon> createState() => _ComingSoonState();

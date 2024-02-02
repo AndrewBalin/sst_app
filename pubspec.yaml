@@ -47,6 +47,7 @@ dependencies:
   socket_io_client: ^2.0.3+1
   image: ^4.0.17
   camera_android_camerax: ^0.5.0+13
+  flutter_webrtc: ^0.9.41
 
 dev_dependencies:
   flutter_test:
@@ -95,6 +96,10 @@ flutter:
     - family: ActayWide
       fonts:
         - asset: assets/fonts/ActayWide.otf
+
+    - family: SamSebeTrener
+      fonts:
+        - asset: assets/fonts/SamSebeTrener.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

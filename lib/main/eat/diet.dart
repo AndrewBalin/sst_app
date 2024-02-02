@@ -1,18 +1,10 @@
-import 'dart:convert';
-import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import 'package:http/http.dart' as http;
 
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sstapp/registration/formController.dart';
 
-import '../../client/hive_names.dart';
-import '../../models/user.dart';
 
 import '../header.dart';
 
@@ -22,7 +14,7 @@ enum Nutrition { classic, vegetarianism, vegan, raw }
 class DietScreen extends StatefulWidget {
 
   final CameraDescription camera;
-  DietScreen({Key? key, required this.camera}) : super(key:key);
+  const DietScreen({Key? key, required this.camera}) : super(key:key);
 
   @override
   State<DietScreen> createState() => _DietScreenState();
@@ -30,7 +22,7 @@ class DietScreen extends StatefulWidget {
 
 class _DietScreenState extends State<DietScreen> {
 
-  FormController formController = FormController();
+  FormController formController = const FormController();
   Active? _active = Active.moderate;
   Nutrition? _nutrition = Nutrition.classic;
   Map<String, dynamic> data = {};
@@ -46,11 +38,12 @@ class _DietScreenState extends State<DietScreen> {
     showModalBottomSheet<void>(
         isScrollControlled: true,
         context: context,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
         ),
         builder: (BuildContext context) {
-          return SingleChildScrollView(
+          return const SingleChildScrollView(
             child: Column(
               children: [
                 Text('''Вот рацион питания на неделю, учитывая твои требования:
@@ -104,24 +97,35 @@ class _DietScreenState extends State<DietScreen> {
         .of(context)
         .size;
 
-    return Column(
+    return SingleChildScrollView(
+      child: Column(
         children: [
           HeaderBar('Питание'),
           Form(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 18, right: 18, top: 24),
-                  child: Container(
-                    height: 60,
-                    child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 24, right: 24),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18, right: 18, top: 24),
+                    child: SizedBox(
+                      height: 60,
+                      child: Center(
+
                         child: TextField(
                           decoration: InputDecoration(
-                            suffixIcon: Icon(Icons.calendar_today_outlined),
+                            suffixIcon: const Icon(Icons.calendar_today_outlined),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                    color: Color.fromARGB(255, 255, 49, 27),
+                                    width: 2)
+                            ),
                             labelText: 'Дата рождения',
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                                 fontSize: 16,
                                 fontFamily: 'Monsterrat',
                                 fontWeight: FontWeight.w400
@@ -134,509 +138,582 @@ class _DietScreenState extends State<DietScreen> {
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 18, right: 18, top: 18),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 24, top: 18),
-                          child: Text(
-                            'Уровень физ. активности',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18, right: 18, top: 18),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 38, top: 18),
+                            child: Text(
+                              'Уровень физ. активности',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 22, right: 22, top: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Radio(
-                                value: Active.low,
-                                onChanged: (Active? value) {
-                                  setState(() {
-                                    _active = value;
-                                  });
-                                },
-                                groupValue: _active,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10, top: 5),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Низкий',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10),
-                                      child: Text(
-                                        'Веду малоподвижный образ жизни, почти не занимаюсь спортом',
-                                        style: TextStyle(
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400
-                                        ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 22, top: 10),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Radio(
+                                  value: Active.low,
+                                  hoverColor: const Color.fromARGB(
+                                      255, 255, 49, 27),
+                                  onChanged: (Active? value) {
+                                    setState(() {
+                                      _active = value;
+                                    });
+                                  },
+                                  groupValue: _active,
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, top: 5),
+                                    child: SizedBox(
+                                      width: size.width - 18 - 18 - 52 - 52,
+                                      child: const Column(
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .start,
+                                        children: [
+                                          Text(
+                                            'Низкий',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 10),
+                                            child: Text(
+                                              'Веду малоподвижный образ жизни, почти не занимаюсь спортом',
+                                              style: TextStyle(
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     )
-                                  ],
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 22, right: 22, top: 18),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Radio(
-                                value: Active.moderate,
-                                onChanged: (Active? value) {
-                                  setState(() {
-                                    _active = value;
-                                  });
-                                },
-                                groupValue: _active,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10, top: 5),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Умеренный',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 5),
-                                      child: Text(
-                                        'Тренировкм низкой активности (ходьба, езда на велосипеде, плавание, йога) 1-2 раза в неделю',
-                                        style: TextStyle(
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400
-                                        ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 22, top: 18),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Radio(
+                                  value: Active.moderate,
+                                  onChanged: (Active? value) {
+                                    setState(() {
+                                      _active = value;
+                                    });
+                                  },
+                                  groupValue: _active,
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(left: 10, top: 5),
+                                    child: SizedBox(
+                                      width: size.width - 18 - 18 - 52 - 52,
+                                      child: const Column(
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .start,
+                                        children: [
+                                          Text(
+                                            'Умеренный',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 10),
+                                            child: Text(
+                                              'Тренировкм низкой активности (ходьба, езда на велосипеде, плавание, йога) 1-2 раза в неделю',
+                                              style: TextStyle(
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     )
-                                  ],
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 22, right: 22, top: 18),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Radio(
-                                value: Active.middle,
-                                onChanged: (Active? value) {
-                                  setState(() {
-                                    _active = value;
-                                  });
-                                },
-                                groupValue: _active,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10, top: 5),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Средний',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10),
-                                      child: Text(
-                                        'Много и часто хожу, выполняю тренировки средней сложности 1-4 раза в неделю и не менее 30 минут',
-                                        style: TextStyle(
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400
-                                        ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 22, top: 18),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Radio(
+                                  value: Active.middle,
+                                  onChanged: (Active? value) {
+                                    setState(() {
+                                      _active = value;
+                                    });
+                                  },
+                                  groupValue: _active,
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(left: 10, top: 5),
+                                    child: SizedBox(
+                                      width: size.width - 18 - 18 - 52 - 52,
+                                      child: const Column(
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .start,
+                                        children: [
+                                          Text(
+                                            'Средний',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 10),
+                                            child: Text(
+                                              'Много и часто хожу, выполняю тренировки средней сложности 1-4 раза в неделю и не менее 30 минут',
+                                              style: TextStyle(
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     )
-                                  ],
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 22, right: 22, top: 18, bottom: 24),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Radio(
-                                value: Active.high,
-                                onChanged: (Active? value) {
-                                  setState(() {
-                                    _active = value;
-                                  });
-                                },
-                                groupValue: _active,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10, top: 5),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Высокий',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10),
-                                      child: Text(
-                                        'Выолняю высокоинтенсивные тренировки или тяжёлую физическую работу 5-7 раз в неделю',
-                                        style: TextStyle(
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400
-                                        ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                right: 22, top: 18, bottom: 24),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Radio(
+                                  value: Active.high,
+                                  onChanged: (Active? value) {
+                                    setState(() {
+                                      _active = value;
+                                    });
+                                  },
+                                  groupValue: _active,
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(left: 10, top: 5),
+                                    child: SizedBox(
+                                      width: size.width - 18 - 18 - 52 - 52,
+                                      child: const Column(
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .start,
+                                        children: [
+                                          Text(
+                                            'Высокий',
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 10),
+                                            child: Text(
+                                              'Выолняю высокоинтенсивные тренировки или тяжёлую физическую работу 5-7 раз в неделю',
+                                              style: TextStyle(
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     )
-                                  ],
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                    padding: EdgeInsets.only(left: 18, right: 18, top: 18),
-                    child: Container(
-                      height: 60,
-                      child: Center(
-                        child: TextField(
-                          decoration: InputDecoration(
+                  Padding(
+                      padding: const EdgeInsets.only(left: 18, right: 18, top: 18),
+                      child: SizedBox(
+                        height: 60,
+                        child: Center(
+                          child: TextField(
+                            decoration: InputDecoration(
                               labelText: 'Желаемый вес',
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide.none
-                              )
-                          ),
-                          onChanged: (value) {
-                            data['weight'] = value;
-                          },
-                        ),
-                      ),
-                    )
-                ),
-                Padding(
-                    padding: EdgeInsets.only(left: 18, right: 18, top: 18),
-                    child: Container(
-                      height: 180,
-                      child: Center(
-                        child: TextField(
-                          decoration: InputDecoration(
-                              labelText: 'Заболевания, если есть - перечислите',
-                              border: OutlineInputBorder(
+                              ),
+                              focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none
-                              )
+                                  borderSide: const BorderSide(
+                                      color: Color.fromARGB(255, 255, 49, 27),
+                                      width: 2)
+                              ),
+                            ),
+                            onChanged: (value) {
+                              data['weight'] = value;
+                            },
+                          ),
+                        ),
+                      )
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 18, right: 18, top: 18),
+                      child: SizedBox(
+                        height: 180,
+                        child: TextField(
+                          minLines: 5,
+                          maxLines: 5,
+                          keyboardType: TextInputType.multiline,
+                          decoration: InputDecoration(
+                            labelText: 'Заболевания, если есть - перечислите',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                    color: Color.fromARGB(255, 255, 49, 27),
+                                    width: 2)
+                            ),
                           ),
                           onChanged: (value) {
                             data['zab'] = value;
                           },
                         ),
-                      ),
-                    )
-                ),
-                Padding(
-                    padding: EdgeInsets.only(left: 18, right: 18, top: 18),
-                    child: Container(
-                      height: 180,
-                      child: Center(
+                      )
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 18, right: 18, top: 18),
+                      child: SizedBox(
+                        height: 180,
                         child: TextField(
+                          minLines: 5,
+                          maxLines: 5,
+                          keyboardType: TextInputType.multiline,
                           decoration: InputDecoration(
-                              labelText: 'Любимые продукты и блюда',
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none
-                              )
+                            labelText: 'Любимые продукты и блюда',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                    color: Color.fromARGB(255, 255, 49, 27),
+                                    width: 2)
+                            ),
                           ),
                           onChanged: (value) {
                             data['like'] = value;
                           },
                         ),
-                      ),
-                    )
-                ),
-                Padding(
-                    padding: EdgeInsets.only(left: 18, right: 18, top: 18),
-                    child: Container(
-                      height: 180,
-                      child: Center(
+                      )
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 18, right: 18, top: 18),
+                      child: SizedBox(
+                        height: 180,
                         child: TextField(
+                          minLines: 5,
+                          maxLines: 5,
                           decoration: InputDecoration(
-                              labelText: 'Нелюбимые продукты и блюда',
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none
-                              )
+                            labelText: 'Нелюбимые продукты и блюда',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                    color: Color.fromARGB(255, 255, 49, 27),
+                                    width: 2)
+                            ),
                           ),
                           onChanged: (value) {
                             data['dislike'] = value;
                           },
                         ),
-                      ),
-                    )
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 18, right: 18, top: 10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 24, top: 18),
-                          child: Text(
-                            'Образ питания',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 22, right: 22, top: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Radio(
-                                value: Nutrition.classic,
-                                onChanged: (Nutrition? value) {
-                                  setState(() {
-                                    _nutrition = value;
-                                  });
-                                },
-                                groupValue: _nutrition,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10, top: 5),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Классическое питание',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 22, right: 22, top: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Radio(
-                                value: Nutrition.vegetarianism,
-                                onChanged: (Nutrition? value) {
-                                  setState(() {
-                                    _nutrition = value;
-                                  });
-                                },
-                                groupValue: _nutrition,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10, top: 5),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Вегитарианство',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 22, right: 22, top: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Radio(
-                                value: Nutrition.vegan,
-                                onChanged: (Nutrition? value) {
-                                  setState(() {
-                                    _nutrition = value;
-                                  });
-                                },
-                                groupValue: _nutrition,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10, top: 5),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Веганство',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 22, right: 22, top: 10, bottom: 24),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Radio(
-                                value: Nutrition.raw,
-                                onChanged: (Nutrition? value) {
-                                  setState(() {
-                                    _nutrition = value;
-                                  });
-                                },
-                                groupValue: _nutrition,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10, top: 5),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Сыроедчество',
-                                      style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(left: 18, right: 18, top: 18),
-                            child: Container(
-                              height: 180,
-                              child: Center(
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                      labelText: 'Аллергия на продукты',
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: BorderSide.none
-                                      )
-                                  ),
-                                  onChanged: (value) {
-                                    data['allergy'] = value;
-                                  },
-                                ),
-                              ),
-                            )
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(left: 18, right: 18, top: 18),
-                            child: Container(
-                              height: 60,
-                              child: Center(
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                      labelText: 'Сколько раз в день хотите питаться',
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: BorderSide.none
-                                      )
-                                  ),
-                                  onChanged: (value) {
-                                    data['count'] = value;
-                                  },
-                                ),
-                              ),
-                            )
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 18, right: 18, top: 36, bottom: 24),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              sendData();
-                            },
-                            child: const Text('Далее',
-                                style: TextStyle(fontFamily: 'Montserrat',
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600)),
-                            style: ElevatedButton.styleFrom(
-                                primary: Color.fromARGB(255, 255, 49, 27),
-                                padding: EdgeInsets.only(top: 25, bottom: 25),
-                                minimumSize: Size(double.infinity, 0),
-                                elevation: 7,
-                                shadowColor: Color.fromARGB(255, 243, 93, 77),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(500)
-                                )
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                      )
                   ),
-                ),
-              ],
+                  Padding(
+                      padding: const EdgeInsets.only(left: 18, right: 18, top: 10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 24, top: 18),
+                                child: Text(
+                                  'Образ питания',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 22, top: 10),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Radio(
+                                      value: Nutrition.classic,
+                                      onChanged: (Nutrition? value) {
+                                        setState(() {
+                                          _nutrition = value;
+                                        });
+                                      },
+                                      groupValue: _nutrition,
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 10, top: 5),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Классическое питание',
+                                            style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 22, top: 10),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Radio(
+                                      value: Nutrition.vegetarianism,
+                                      onChanged: (Nutrition? value) {
+                                        setState(() {
+                                          _nutrition = value;
+                                        });
+                                      },
+                                      groupValue: _nutrition,
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 10, top: 5),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Вегитарианство',
+                                            style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 22, top: 10),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Radio(
+                                      value: Nutrition.vegan,
+                                      onChanged: (Nutrition? value) {
+                                        setState(() {
+                                          _nutrition = value;
+                                        });
+                                      },
+                                      groupValue: _nutrition,
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 10, top: 5),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Веганство',
+                                            style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    right: 22, top: 10, bottom: 24),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Radio(
+                                      value: Nutrition.raw,
+                                      onChanged: (Nutrition? value) {
+                                        setState(() {
+                                          _nutrition = value;
+                                        });
+                                      },
+                                      groupValue: _nutrition,
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 10, top: 5),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Сыроедчество',
+                                            style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w400
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ]
+                        ),
+                      )
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(
+                          left: 18, right: 18, top: 18),
+                      child: SizedBox(
+                        height: 180,
+                        child: TextField(
+                          minLines: 5,
+                          maxLines: 5,
+                          decoration: InputDecoration(
+                            labelText: 'Аллергия на продукты',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                    10),
+                                borderSide: BorderSide.none
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                    10),
+                                borderSide: const BorderSide(
+                                    color: Color.fromARGB(
+                                        255, 255, 49, 27), width: 2)
+                            ),
+                          ),
+                          onChanged: (value) {
+                            data['allergy'] = value;
+                          },
+                        ),
+                      )
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(
+                          left: 18, right: 18, top: 18),
+                      child: SizedBox(
+                        height: 60,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            labelText: 'Сколько раз в день хотите питаться',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                    10),
+                                borderSide: BorderSide.none
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                    10),
+                                borderSide: const BorderSide(
+                                    color: Color.fromARGB(
+                                        255, 255, 49, 27), width: 2)
+                            ),
+                          ),
+                          onChanged: (value) {
+                            data['count'] = value;
+                          },
+                        ),
+                      )
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(
+                          left: 18, right: 18, top: 36, bottom: 24),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          sendData();
+                        },
+                        child: const Text('Далее',
+                            style: TextStyle(fontFamily: 'Montserrat',
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600)),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromARGB(255, 255, 49, 27),
+                            padding: const EdgeInsets.only(
+                                top: 25, bottom: 25),
+                            minimumSize: const Size(double.infinity, 0),
+                            elevation: 7,
+                            shadowColor: const Color.fromARGB(
+                                255, 243, 93, 77),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(500)
+                            )
+                        ),
+                      )
+                  )
+                ],
+
+              ),
             ),
-          )
-        ]
+          ),
+        ],
+      ),
     );
   }
 }

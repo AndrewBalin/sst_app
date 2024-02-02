@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 
 class TargetChoice extends StatefulWidget {
@@ -52,7 +51,7 @@ class _TargetChoiceState extends State<TargetChoice> {
         verticalDirection: VerticalDirection.up,
         children: [
           Padding(
-            padding: EdgeInsets.only(bottom: 36, left: 18, right: 18),
+            padding: const EdgeInsets.only(bottom: 36, left: 18, right: 18),
             child: ElevatedButton(
               onPressed: () {
                 NextPage();
@@ -62,11 +61,11 @@ class _TargetChoiceState extends State<TargetChoice> {
                       fontSize: 18,
                       fontWeight: FontWeight.w600)),
               style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 255, 49, 27),
-                  padding: EdgeInsets.only(top: 25, bottom: 25),
-                  minimumSize: Size(double.infinity, 0),
+                  backgroundColor: const Color.fromARGB(255, 255, 49, 27),
+                  padding: const EdgeInsets.only(top: 25, bottom: 25),
+                  minimumSize: const Size(double.infinity, 0),
                   elevation: 7,
-                  shadowColor: Color.fromARGB(255, 243, 93, 77),
+                  shadowColor: const Color.fromARGB(255, 243, 93, 77),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(500)
                   )
@@ -74,7 +73,7 @@ class _TargetChoiceState extends State<TargetChoice> {
             ),
           ),
           Padding(
-              padding: EdgeInsets.only(bottom: 36, left: 18, right: 18),
+              padding: const EdgeInsets.only(bottom: 36, left: 18, right: 18),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(500),
                   child: BackdropFilter(
@@ -92,11 +91,10 @@ class _TargetChoiceState extends State<TargetChoice> {
                               color: Color.fromARGB(255, 253, 254, 253)
                           )),
                       style: ElevatedButton.styleFrom(
-                        onPrimary: Color.fromARGB(13, 253, 254, 253),
-                        primary: Color.fromARGB(active=='Нарастить мышечную массу' ? 39 : 13, 253, 254, 253),
-                        padding: EdgeInsets.only(top: 25, bottom: 25),
-                        minimumSize: Size(double.infinity, 0),
-                        side: BorderSide(
+                        foregroundColor: const Color.fromARGB(13, 253, 254, 253), backgroundColor: Color.fromARGB(active=='Нарастить мышечную массу' ? 39 : 13, 253, 254, 253),
+                        padding: const EdgeInsets.only(top: 25, bottom: 25),
+                        minimumSize: const Size(double.infinity, 0),
+                        side: const BorderSide(
                             color: Color.fromARGB(100, 253, 254, 253),
                             width: 1,
                             style: BorderStyle.solid
@@ -110,7 +108,7 @@ class _TargetChoiceState extends State<TargetChoice> {
               )
           ),
           Padding(
-              padding: EdgeInsets.only(bottom: 18, left: 18, right: 18),
+              padding: const EdgeInsets.only(bottom: 18, left: 18, right: 18),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(500),
                   child: BackdropFilter(
@@ -128,11 +126,10 @@ class _TargetChoiceState extends State<TargetChoice> {
                               color: Color.fromARGB(255, 253, 254, 253)
                           )),
                       style: ElevatedButton.styleFrom(
-                        onPrimary: Color.fromARGB(13, 253, 254, 253),
-                        primary: Color.fromARGB(active=='Быть в тонусе' ? 39 : 13, 253, 254, 253),
-                        padding: EdgeInsets.only(top: 25, bottom: 25),
-                        minimumSize: Size(double.infinity, 0),
-                        side: BorderSide(
+                        foregroundColor: const Color.fromARGB(13, 253, 254, 253), backgroundColor: Color.fromARGB(active=='Быть в тонусе' ? 39 : 13, 253, 254, 253),
+                        padding: const EdgeInsets.only(top: 25, bottom: 25),
+                        minimumSize: const Size(double.infinity, 0),
+                        side: const BorderSide(
                             color: Color.fromARGB(100, 253, 254, 253),
                             width: 1,
                             style: BorderStyle.solid
@@ -146,7 +143,7 @@ class _TargetChoiceState extends State<TargetChoice> {
               )
           ),
           Padding(
-              padding: EdgeInsets.only(bottom: 18, left: 18, right: 18),
+              padding: const EdgeInsets.only(bottom: 18, left: 18, right: 18),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(500),
                   child: BackdropFilter(
@@ -165,11 +162,10 @@ class _TargetChoiceState extends State<TargetChoice> {
                           )
                       ),
                       style: ElevatedButton.styleFrom(
-                        onPrimary: Color.fromARGB(13, 253, 254, 253),
-                        primary: Color.fromARGB(active=='Снизить вес' ? 39 : 13, 253, 254, 253),
-                        padding: EdgeInsets.only(top: 25, bottom: 25),
-                        minimumSize: Size(double.infinity, 0),
-                        side: BorderSide(
+                        foregroundColor: const Color.fromARGB(13, 253, 254, 253), backgroundColor: Color.fromARGB(active=='Снизить вес' ? 39 : 13, 253, 254, 253),
+                        padding: const EdgeInsets.only(top: 25, bottom: 25),
+                        minimumSize: const Size(double.infinity, 0),
+                        side: const BorderSide(
                             color: Color.fromARGB(100, 253, 254, 253),
                             width: 1,
                             style: BorderStyle.solid
@@ -183,7 +179,7 @@ class _TargetChoiceState extends State<TargetChoice> {
               )
           ),
           Padding(
-              padding: EdgeInsets.only(bottom: 24, left: 18, right: 18),
+              padding: const EdgeInsets.only(bottom: 24, left: 18, right: 18),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -200,7 +196,7 @@ class _TargetChoiceState extends State<TargetChoice> {
                 ],
               )
           ),
-          Expanded(
+          const Expanded(
               child: Align(
                   alignment: Alignment.topCenter,
                   child: Padding(

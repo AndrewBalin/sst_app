@@ -1,19 +1,11 @@
-import 'dart:convert';
-import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'new.dart';
 
-import 'package:http/http.dart' as http;
 
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../client/hive_names.dart';
-import '../../models/user.dart';
 
 import '../header.dart';
 
@@ -21,7 +13,7 @@ class SportScreen extends StatefulWidget {
 
 
   final CameraDescription camera;
-  SportScreen({Key? key, required this.camera}) : super(key:key);
+  const SportScreen({Key? key, required this.camera}) : super(key:key);
 
   @override
   State<SportScreen> createState() => _SportScreenState();
@@ -55,26 +47,14 @@ class _SportScreenState extends State<SportScreen> {
       children: [
         HeaderBar('Тренировки'),
         Padding(
-            padding: EdgeInsets.only(left: 18, top: 24, right: 18),
+            padding: const EdgeInsets.only(left: 18, top: 24, right: 18),
             child: Container(
                 height: 47,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Color.fromARGB(255, 253, 254, 253),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromARGB(204, 236, 236, 236),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ]
-                ),
                 child: Center(
                   child: Padding(
-                      padding: EdgeInsets.only(left: 17.5, right: 16.5),
+                      padding: const EdgeInsets.only(left: 17.5, right: 16.5),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           InkWell(
                             child: Text(
@@ -85,7 +65,7 @@ class _SportScreenState extends State<SportScreen> {
                                   fontWeight: FontWeight.w400,
                                   color: _currentIndex == 0
                                       ? Colors.black
-                                      : Color
+                                      : const Color
                                       .fromARGB(255, 212, 212, 212)
                               ),
                             ),
@@ -98,14 +78,14 @@ class _SportScreenState extends State<SportScreen> {
                           ),
                           InkWell(
                             child: Text(
-                              'Мои',
+                              'Моя тренировка',
                               style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
                                   color: _currentIndex == 1
                                       ? Colors.black
-                                      : Color
+                                      : const Color
                                       .fromARGB(255, 212, 212, 212)
                               ),
                             ),
@@ -116,26 +96,6 @@ class _SportScreenState extends State<SportScreen> {
                               _toPage(1);
                             },
                           ),
-                          InkWell(
-                            child: Text(
-                              'Ещё',
-                              style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: _currentIndex == 2
-                                      ? Colors.black
-                                      : Color
-                                      .fromARGB(255, 212, 212, 212)
-                              ),
-                            ),
-                            onTap: () {
-                              setState(() {
-                                _currentIndex = 2;
-                              });
-                              _toPage(2);
-                            },
-                          ),
                         ],
                       )
                   ),
@@ -144,7 +104,7 @@ class _SportScreenState extends State<SportScreen> {
         ),
         Expanded(
             child: PageView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               controller: _controller,
               children: [
                 NewTrains(camera: widget.camera)

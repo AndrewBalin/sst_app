@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:image_picker/image_picker.dart';
-import 'main/eat/cameraEat.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'models/user.dart';
@@ -21,6 +16,7 @@ void main() async {
   await Hive.initFlutter();
 
   Hive.registerAdapter(UserAdapter());
+
   await Hive.openBox<User>(HiveBoxes.user);
 
   final _cameras = await availableCameras();
@@ -40,7 +36,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData().copyWith(
           colorScheme: ThemeData().colorScheme.copyWith(
-            primary: Color.fromARGB(255, 255, 49, 27),
+            primary: const Color.fromARGB(255, 255, 49, 27),
           )
       ),
       initialRoute: '/',
@@ -63,18 +59,19 @@ class MyApp extends StatelessWidget {
             );
           } else {
             return MaterialPageRoute(
-              builder: (context) => IntroSlide(),
+              builder: (context) => const IntroSlide(),
             );
           }
         } else if(path[0] == 'registration') {
           return MaterialPageRoute(
-              builder: (context) => IntroSlide(), 
+              builder: (context) => const IntroSlide(), 
           );
         } else if(path[0] == 'form') {
           return MaterialPageRoute(
-            builder: (context) => FormController()
+            builder: (context) => const FormController()
           );
         }
+        return null;
       },
     );
   }

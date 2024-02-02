@@ -1,16 +1,8 @@
-import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import 'package:http/http.dart' as http;
 
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
-import '../client/hive_names.dart';
-import '../models/user.dart';
 
 class HeaderBar extends StatefulWidget {
 
@@ -23,7 +15,7 @@ class HeaderBar extends StatefulWidget {
 
 class _HeaderBarState extends State<HeaderBar> {
 
-  int _currentIndex = 0;
+  final int _currentIndex = 0;
 
   final PageController _controller = PageController();
   Map<String, String> userData = {};
@@ -37,8 +29,8 @@ class _HeaderBarState extends State<HeaderBar> {
     return Container(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(left: 18, right: 18, top: 48),
+            /*Padding(
+              padding: const EdgeInsets.only(left: 18, right: 18, top: 48),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -47,7 +39,7 @@ class _HeaderBarState extends State<HeaderBar> {
                         children: [
                           Center(
                               child: Container(
-                                child: CircleAvatar(
+                                child: const CircleAvatar(
                                   radius: 17,
                                   backgroundImage: NetworkImage(
                                       'https://i.pinimg.com/736x/1f/86/60/1f8660ca4dc4ea88ec93ca0f29f376dd.jpg'
@@ -58,7 +50,7 @@ class _HeaderBarState extends State<HeaderBar> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(19),
                                     border: Border.all(
-                                        color: Color.fromARGB(
+                                        color: const Color.fromARGB(
                                             255, 255, 49, 27),
                                         width: 1)
                                 ),
@@ -67,29 +59,29 @@ class _HeaderBarState extends State<HeaderBar> {
                         ],
                       )
                   ),
-                  InkWell(
+                  const InkWell(
                     child: Icon(Icons.bookmark_border_outlined, size: 30),
                   ),
                 ],
               ),
-            ),
+            ),*/
             Padding(
-              padding: EdgeInsets.only(left: 18, top: 18, right: 18),
+              padding: const EdgeInsets.only(left: 18, top: 18, right: 18),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
+                  const InkWell(
                       child: Icon(Icons.arrow_back_ios_new, size: 30)
                   ),
                   Text(
                     widget.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontFamily: 'ActayWide',
                         fontSize: 22,
                         fontWeight: FontWeight.w700
                     ),
                   ),
-                  InkWell(
+                  const InkWell(
                     child: Icon(Icons.settings_outlined, size: 30),
                   ),
                 ],

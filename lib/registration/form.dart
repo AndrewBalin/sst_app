@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 
 class FormIntro extends StatefulWidget {
@@ -37,7 +36,7 @@ class _FormIntroState extends State<FormIntro> {
         verticalDirection: VerticalDirection.up,
         children: [
           Padding(
-            padding: EdgeInsets.only(bottom: 36, left: 18, right: 18),
+            padding: const EdgeInsets.only(bottom: 36, left: 18, right: 18),
             child: ElevatedButton(
               onPressed: () {
                 nextPage();
@@ -47,11 +46,11 @@ class _FormIntroState extends State<FormIntro> {
                       fontSize: 18,
                       fontWeight: FontWeight.w600)),
               style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 255, 49, 27),
-                  padding: EdgeInsets.only(top: 25, bottom: 25),
-                  minimumSize: Size(double.infinity, 0),
+                  backgroundColor: const Color.fromARGB(255, 255, 49, 27),
+                  padding: const EdgeInsets.only(top: 25, bottom: 25),
+                  minimumSize: const Size(double.infinity, 0),
                   elevation: 7,
-                  shadowColor: Color.fromARGB(255, 243, 93, 77),
+                  shadowColor: const Color.fromARGB(255, 243, 93, 77),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(500)
                   )
@@ -71,7 +70,7 @@ class _FormIntroState extends State<FormIntro> {
             ),
           ),
           Padding(
-              padding: EdgeInsets.only(bottom: 24, left: 18, right: 18),
+              padding: const EdgeInsets.only(bottom: 24, left: 18, right: 18),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -88,7 +87,7 @@ class _FormIntroState extends State<FormIntro> {
                 ],
               )
           ),
-          Expanded(
+          const Expanded(
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Padding(

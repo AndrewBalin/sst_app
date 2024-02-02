@@ -2,8 +2,6 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 
@@ -36,19 +34,20 @@ class _HeightChoiceState extends State<HeightChoice> {
 
 
   Widget _buildItemList(BuildContext context, int index) {
-    if (index == heigth.length)
-      return Center(
+    if (index == heigth.length) {
+      return const Center(
         child: CircularProgressIndicator(),
       );
+    }
     if (index == _focusedIndex) {
       return Padding(
         padding: EdgeInsets.zero,
-        child: Container(
+        child: SizedBox(
             width: 80,
             height: 65,
             child: Center(
               child: Text('${heigth[index]}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'ActayWide',
                   fontSize: 22,
                   color: Color.fromARGB(255, 253, 254, 253),
@@ -62,12 +61,12 @@ class _HeightChoiceState extends State<HeightChoice> {
     else if (index == _focusedIndex + 1 || index == _focusedIndex - 1) {
       return Padding(
         padding: EdgeInsets.zero,
-        child: Container(
+        child: SizedBox(
             width: 80,
             height: 65,
             child: Center(
               child: Text('${heigth[index]}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'ActayWide',
                   fontSize: 22,
                   color: Color.fromARGB(178, 253, 254, 253),
@@ -81,12 +80,12 @@ class _HeightChoiceState extends State<HeightChoice> {
     else if (index == _focusedIndex + 2 || index == _focusedIndex - 2) {
       return Padding(
         padding: EdgeInsets.zero,
-        child: Container(
+        child: SizedBox(
             width: 80,
             height: 65,
             child: Center(
               child: Text('${heigth[index]}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'ActayWide',
                   fontSize: 22,
                   color: Color.fromARGB(102, 253, 254, 253),
@@ -99,12 +98,12 @@ class _HeightChoiceState extends State<HeightChoice> {
     }
     return Padding(
       padding: EdgeInsets.zero,
-      child: Container(
+      child: SizedBox(
           width: 80,
           height: 65,
           child: Center(
             child: Text('${heigth[index]}',
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'ActayWide',
                 fontSize: 22,
                 color: Color.fromARGB(50, 253, 254, 253),
@@ -134,7 +133,7 @@ class _HeightChoiceState extends State<HeightChoice> {
         verticalDirection: VerticalDirection.up,
         children: [
           Padding(
-            padding: EdgeInsets.only(bottom: 36, left: 18, right: 18),
+            padding: const EdgeInsets.only(bottom: 36, left: 18, right: 18),
             child: ElevatedButton(
               onPressed: () {
                 NextPage();
@@ -144,11 +143,11 @@ class _HeightChoiceState extends State<HeightChoice> {
                       fontSize: 18,
                       fontWeight: FontWeight.w600)),
               style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 255, 49, 27),
-                  padding: EdgeInsets.only(top: 25, bottom: 25),
-                  minimumSize: Size(double.infinity, 0),
+                  backgroundColor: const Color.fromARGB(255, 255, 49, 27),
+                  padding: const EdgeInsets.only(top: 25, bottom: 25),
+                  minimumSize: const Size(double.infinity, 0),
                   elevation: 7,
-                  shadowColor: Color.fromARGB(255, 243, 93, 77),
+                  shadowColor: const Color.fromARGB(255, 243, 93, 77),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(500)
                   )
@@ -156,15 +155,15 @@ class _HeightChoiceState extends State<HeightChoice> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: 36),
-            child: Container(
+            padding: const EdgeInsets.only(bottom: 36),
+            child: SizedBox(
                 height: 65,
                 child: Stack(
                   children: [
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
-                        padding: EdgeInsets.only(bottom: 4),
+                        padding: const EdgeInsets.only(bottom: 4),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: BackdropFilter(
@@ -175,7 +174,7 @@ class _HeightChoiceState extends State<HeightChoice> {
                                     borderRadius: BorderRadius.circular(
                                         20),
                                     border: Border.all(
-                                        color: Color.fromARGB(
+                                        color: const Color.fromARGB(
                                             100, 253, 254, 253),
                                         width: 2
                                     )
@@ -206,7 +205,7 @@ class _HeightChoiceState extends State<HeightChoice> {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: EdgeInsets.only(bottom: 24, left: 18, right: 18),
+                padding: const EdgeInsets.only(bottom: 24, left: 18, right: 18),
                 child: Text(
                   'Ваш рост',
                   style: TextStyle(fontFamily: 'ActayWide',
@@ -220,7 +219,7 @@ class _HeightChoiceState extends State<HeightChoice> {
               ),
             ),
           ),
-          Expanded(
+          const Expanded(
               child: Align(
                   alignment: Alignment.topCenter,
                   child: Padding(
